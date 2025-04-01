@@ -7,12 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 class ListaCompraTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->listaCompra = new ListaCompra();
+    }
+
     /**
      * @test
      */
     public function givenStringAñadirPanReturnsStringWithPan() : void{
-        $listaCompra = new listaCompra();
-        $result = $listaCompra->execute("añadir pan");
+        $result = $this->listaCompra->execute("añadir pan");
+
         $this->assertEquals("pan x1", $result);
     }
 
@@ -20,8 +26,8 @@ class ListaCompraTest extends TestCase
      * @test
      */
     public function givenStringAñadirPan2ReturnsStringWithPanx2() : void{
-        $listaCompra = new listaCompra();
-        $result = $listaCompra->execute("añadir pan 2");
+        $result = $this->listaCompra->execute("añadir pan 2");
+
         $this->assertEquals("pan x2", $result);
     }
 
@@ -29,9 +35,9 @@ class ListaCompraTest extends TestCase
      * @test
      */
     public function givenStringAñadirPan2WithExistingPanx1ReturnsStringWithPanx3(): void{
-        $listaCompra = new listaCompra();
-        $result = $listaCompra->execute("añadir pan 1");
-        $result = $listaCompra->execute("añadir pan 2");
+        $result = $this->listaCompra->execute("añadir pan 1");
+        $result = $this->listaCompra->execute("añadir pan 2");
+
         $this->assertEquals("pan x3", $result);
     }
 }

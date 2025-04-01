@@ -13,31 +13,34 @@ class ListaCompra
     }
     public function execute($command) : string{
         $splittedCommand = explode(" ", $command);
+        $product = $splittedCommand[1];
+        $result = "";
         if(count($splittedCommand) == 2){
-            $producto = $splittedCommand[1];
-            if(!in_array($producto, $this->listaCompraProductos)){
-                $this->listaCompraProductos[] = $producto;
+            if(!in_array($product, $this->listaCompraProductos)){
+                $this->listaCompraProductos[] = $product;
                 $this->listaCompraCantidades[] = 1;
             }else{
-                $index = array_search($producto, $this->listaCompraProductos);
+                $index = array_search($product, $this->listaCompraProductos);
                 $this->listaCompraCantidades[$index] += 1;
             }
-        }
-        if(count($splittedCommand) == 3){
-            $producto = $splittedCommand[1];
-            $cantidad = (int)$splittedCommand[2];
-            if(!in_array($producto, $this->listaCompraProductos)){
-                $this->listaCompraProductos[] = $producto;
-                $this->listaCompraCantidades[] = $cantidad;
-            }else{
-                $index = array_search($producto, $this->listaCompraProductos);
-                $this->listaCompraCantidades[$index] += $cantidad;
+            for($i = 0; $i < count($this->listaCompraProductos); $i++){
+                $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
             }
+
+            return rtrim($result, ", ");
         }
-        $result = "";
+        $quantity = (int)$splittedCommand[2];
+        if(!in_array($product, $this->listaCompraProductos)){
+            $this->listaCompraProductos[] = $product;
+            $this->listaCompraCantidades[] = $quantity;
+        }else{
+            $index = array_search($product, $this->listaCompraProductos);
+            $this->listaCompraCantidades[$index] += $quantity;
+        }
         for($i = 0; $i < count($this->listaCompraProductos); $i++){
             $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
         }
+
         return rtrim($result, ", ");
     }
 }
