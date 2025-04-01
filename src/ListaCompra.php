@@ -37,6 +37,7 @@ class ListaCompra
 
                 return rtrim($result, ", ");
             }
+
             $quantity = (int)$splittedCommand[2];
             if(!in_array($product, $this->listaCompraProductos))
             {
@@ -64,9 +65,10 @@ class ListaCompra
             {
                 $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
             }
+
             return rtrim($result, ", ");
         }
-        return "Comando no reconocido";
 
+        return "Comando no reconocido";
     }
 }
