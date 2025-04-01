@@ -83,6 +83,15 @@ class ListaCompraTest extends TestCase
     /**
      * @test
      */
+    public function givenStringEliminarPanWithoutPanInListReturnsElProductoSeleccionadoNoExiste(): void{
+        $result = $this->listaCompra->execute("eliminar pan");
+
+        $this->assertEquals("El producto seleccionado no existe", $result);
+    }
+
+    /**
+     * @test
+     */
     public function givenStringVaciarRemovesAllProducts(): void
     {
         $result = $this->listaCompra->execute("añadir leche 1");

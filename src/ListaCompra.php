@@ -65,6 +65,10 @@ class ListaCompra
         {
             $product = $splittedCommand[1];
             $index = array_search($product, $this->productList);
+            if($index === false)
+            {
+                return "El producto seleccionado no existe";
+            }
             unset($this->productList[$index]);
             unset($this->quantityList[$index]);
             for($i = 0; $i < count($this->productList); $i++)
