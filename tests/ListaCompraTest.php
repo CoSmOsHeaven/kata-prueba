@@ -40,4 +40,14 @@ class ListaCompraTest extends TestCase
 
         $this->assertEquals("pan x3", $result);
     }
+
+    /**
+     * @test
+     */
+    public function givenStringAñadirPan2WithExistingLechex1ReturnsStringWithLechex1Panx2(): void{
+        $result = $this->listaCompra->execute("añadir leche 1");
+        $result = $this->listaCompra->execute("añadir pan 2");
+
+        $this->assertEquals("leche x1, pan x2", $result);
+    }
 }
