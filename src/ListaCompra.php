@@ -4,12 +4,12 @@ namespace Deg540\DockerPHPBoilerplate;
 
 class ListaCompra
 {
-    public array $listaCompraProductos;
-    public array $listaCompraCantidades;
+    public array $productList;
+    public array $quantityList;
     public function __construct()
     {
-        $this->listaCompraProductos = [];
-        $this->listaCompraCantidades = [];
+        $this->productList = [];
+        $this->quantityList = [];
     }
     public function execute($command) : string
     {
@@ -20,51 +20,56 @@ class ListaCompra
             $product = $splittedCommand[1];
             if(count($splittedCommand) == 2)
             {
-                if(!in_array($product, $this->listaCompraProductos))
+                if(!in_array($product, $this->productList))
                 {
-                    $this->listaCompraProductos[] = $product;
-                    $this->listaCompraCantidades[] = 1;
+                    $this->productList[] = $product;
+                    $this->quantityList[] = 1;
                 }
+
                 else
                 {
-                    $index = array_search($product, $this->listaCompraProductos);
-                    $this->listaCompraCantidades[$index] += 1;
+                    $index = array_search($product, $this->productList);
+                    $this->quantityList[$index] += 1;
                 }
-                for($i = 0; $i < count($this->listaCompraProductos); $i++)
+
+                for($i = 0; $i < count($this->productList); $i++)
                 {
-                    $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
+                    $result .= $this->productList[$i] . " x" . $this->quantityList[$i] . ", ";
                 }
 
                 return rtrim($result, ", ");
             }
 
             $quantity = (int)$splittedCommand[2];
-            if(!in_array($product, $this->listaCompraProductos))
+            if(!in_array($product, $this->productList))
             {
-                $this->listaCompraProductos[] = $product;
-                $this->listaCompraCantidades[] = $quantity;
+                $this->productList[] = $product;
+                $this->quantityList[] = $quantity;
             }
+
             else
             {
-                $index = array_search($product, $this->listaCompraProductos);
-                $this->listaCompraCantidades[$index] += $quantity;
+                $index = array_search($product, $this->productList);
+                $this->quantityList[$index] += $quantity;
             }
-            for($i = 0; $i < count($this->listaCompraProductos); $i++)
+
+            for($i = 0; $i < count($this->productList); $i++)
             {
-                $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
+                $result .= $this->productList[$i] . " x" . $this->quantityList[$i] . ", ";
             }
+
             return rtrim($result, ", ");
         }
 
         if($splittedCommand[0] === "eliminar")
         {
             $product = $splittedCommand[1];
-            $index = array_search($product, $this->listaCompraProductos);
-            unset($this->listaCompraProductos[$index]);
-            unset($this->listaCompraCantidades[$index]);
-            for($i = 0; $i < count($this->listaCompraProductos); $i++)
+            $index = array_search($product, $this->productList);
+            unset($this->productList[$index]);
+            unset($this->quantityList[$index]);
+            for($i = 0; $i < count($this->productList); $i++)
             {
-                $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
+                $result .= $this->productList[$i] . " x" . $this->quantityList[$i] . ", ";
             }
 
             return rtrim($result, ", ");
@@ -72,8 +77,8 @@ class ListaCompra
 
         if($splittedCommand[0] === "vaciar")
         {
-            $this->listaCompraProductos = [];
-            $this->listaCompraCantidades = [];
+            $this->productList = [];
+            $this->quantityList = [];
 
             return "";
         }
