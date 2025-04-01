@@ -15,10 +15,12 @@ class ListaCompra
     {
         $splittedCommand = explode(" ", $command);
         $result = "";
-        if($splittedCommand[0] == "añadir")
+        $function = $splittedCommand[0];
+        if($function == "añadir")
         {
             $product = $splittedCommand[1];
-            if(count($splittedCommand) == 2)
+            $parameterNumber = count($splittedCommand);
+            if($parameterNumber == 2)
             {
                 if(!in_array($product, $this->productList))
                 {
@@ -32,9 +34,9 @@ class ListaCompra
                     $this->quantityList[$index] += 1;
                 }
 
-                for($i = 0; $i < count($this->productList); $i++)
+                for($productNumber = 0; $productNumber < count($this->productList); $productNumber++)
                 {
-                    $result .= $this->productList[$i] . " x" . $this->quantityList[$i] . ", ";
+                    $result .= $this->productList[$productNumber] . " x" . $this->quantityList[$productNumber] . ", ";
                 }
 
                 return rtrim($result, ", ");
@@ -53,15 +55,15 @@ class ListaCompra
                 $this->quantityList[$index] += $quantity;
             }
 
-            for($i = 0; $i < count($this->productList); $i++)
+            for($productNumber = 0; $productNumber < count($this->productList); $productNumber++)
             {
-                $result .= $this->productList[$i] . " x" . $this->quantityList[$i] . ", ";
+                $result .= $this->productList[$productNumber] . " x" . $this->quantityList[$productNumber] . ", ";
             }
 
             return rtrim($result, ", ");
         }
 
-        if($splittedCommand[0] === "eliminar")
+        if($function === "eliminar")
         {
             $product = $splittedCommand[1];
             $index = array_search($product, $this->productList);
@@ -69,17 +71,18 @@ class ListaCompra
             {
                 return "El producto seleccionado no existe";
             }
+
             unset($this->productList[$index]);
             unset($this->quantityList[$index]);
-            for($i = 0; $i < count($this->productList); $i++)
+            for($productNumber = 0; $productNumber < count($this->productList); $productNumber++)
             {
-                $result .= $this->productList[$i] . " x" . $this->quantityList[$i] . ", ";
+                $result .= $this->productList[$productNumber] . " x" . $this->quantityList[$productNumber] . ", ";
             }
 
             return rtrim($result, ", ");
         }
 
-        if($splittedCommand[0] === "vaciar")
+        if($function === "vaciar")
         {
             $this->productList = [];
             $this->quantityList = [];
