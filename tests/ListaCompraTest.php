@@ -79,4 +79,17 @@ class ListaCompraTest extends TestCase
 
         $this->assertEquals("leche x1", $result);
     }
+
+    /**
+     * @test
+     */
+    public function givenStringVaciarRemovesAllProducts(): void
+    {
+        $result = $this->listaCompra->execute("añadir leche 1");
+        $result = $this->listaCompra->execute("añadir pan 1");
+
+        $result = $this->listaCompra->execute("vaciar");
+
+        $this->assertEquals("", $result);
+    }
 }

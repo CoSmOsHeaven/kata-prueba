@@ -14,10 +14,10 @@ class ListaCompra
     public function execute($command) : string
     {
         $splittedCommand = explode(" ", $command);
-        $product = $splittedCommand[1];
         $result = "";
         if($splittedCommand[0] == "añadir")
         {
+            $product = $splittedCommand[1];
             if(count($splittedCommand) == 2)
             {
                 if(!in_array($product, $this->listaCompraProductos))
@@ -58,6 +58,7 @@ class ListaCompra
 
         if($splittedCommand[0] === "eliminar")
         {
+            $product = $splittedCommand[1];
             $index = array_search($product, $this->listaCompraProductos);
             unset($this->listaCompraProductos[$index]);
             unset($this->listaCompraCantidades[$index]);
@@ -67,6 +68,14 @@ class ListaCompra
             }
 
             return rtrim($result, ", ");
+        }
+
+        if($splittedCommand[0] === "vaciar")
+        {
+            $this->listaCompraProductos = [];
+            $this->listaCompraCantidades = [];
+
+            return "";
         }
 
         return "Comando no reconocido";
