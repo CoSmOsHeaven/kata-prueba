@@ -16,41 +16,57 @@ class ListaCompra
         $splittedCommand = explode(" ", $command);
         $product = $splittedCommand[1];
         $result = "";
-        if(count($splittedCommand) == 2)
+        if($splittedCommand[0] == "añadir")
         {
+            if(count($splittedCommand) == 2)
+            {
+                if(!in_array($product, $this->listaCompraProductos))
+                {
+                    $this->listaCompraProductos[] = $product;
+                    $this->listaCompraCantidades[] = 1;
+                }
+                else
+                {
+                    $index = array_search($product, $this->listaCompraProductos);
+                    $this->listaCompraCantidades[$index] += 1;
+                }
+                for($i = 0; $i < count($this->listaCompraProductos); $i++)
+                {
+                    $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
+                }
+
+                return rtrim($result, ", ");
+            }
+            $quantity = (int)$splittedCommand[2];
             if(!in_array($product, $this->listaCompraProductos))
             {
                 $this->listaCompraProductos[] = $product;
-                $this->listaCompraCantidades[] = 1;
+                $this->listaCompraCantidades[] = $quantity;
             }
             else
             {
                 $index = array_search($product, $this->listaCompraProductos);
-                $this->listaCompraCantidades[$index] += 1;
+                $this->listaCompraCantidades[$index] += $quantity;
             }
             for($i = 0; $i < count($this->listaCompraProductos); $i++)
             {
                 $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
             }
-
             return rtrim($result, ", ");
         }
-        $quantity = (int)$splittedCommand[2];
-        if(!in_array($product, $this->listaCompraProductos))
-        {
-            $this->listaCompraProductos[] = $product;
-            $this->listaCompraCantidades[] = $quantity;
-        }
-        else
+
+        if($splittedCommand[0] === "eliminar")
         {
             $index = array_search($product, $this->listaCompraProductos);
-            $this->listaCompraCantidades[$index] += $quantity;
+            unset($this->listaCompraProductos[$index]);
+            unset($this->listaCompraCantidades[$index]);
+            for($i = 0; $i < count($this->listaCompraProductos); $i++)
+            {
+                $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
+            }
+            return rtrim($result, ", ");
         }
-        for($i = 0; $i < count($this->listaCompraProductos); $i++)
-        {
-            $result .= $this->listaCompraProductos[$i] . " x" . $this->listaCompraCantidades[$i] . ", ";
-        }
+        return "Comando no reconocido";
 
-        return rtrim($result, ", ");
     }
 }

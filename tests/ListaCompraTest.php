@@ -54,4 +54,25 @@ class ListaCompraTest extends TestCase
 
         $this->assertEquals("leche x1, pan x2", $result);
     }
+
+    /**
+     * @test
+     */
+    public function givenStringEliminarPanWithPanx1InListReturnsEmptyString(): void
+    {
+        $result = $this->listaCompra->execute("añadir pan 1");
+        $result = $this->listaCompra->execute("eliminar pan");
+
+        $this->assertEquals("", $result);
+    }
+    /**
+     * @test
+     */
+    public function givenStringEliminarPanInListWithMoreProductsReturnsStringWithoutPan(): void{
+        $result = $this->listaCompra->execute("añadir leche 1");
+        $result = $this->listaCompra->execute("añadir pan 1");
+        $result = $this->listaCompra->execute("eliminar pan");
+
+        $this->assertEquals("leche x1", $result);
+    }
 }
