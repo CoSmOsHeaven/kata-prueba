@@ -10,7 +10,7 @@ class ListaCompraTest extends TestCase
     /**
      * @test
      */
-    public function givenStringAñadirPanReturnsListWithPan() : void{
+    public function givenStringAñadirPanReturnsStringWithPan() : void{
         $listaCompra = new listaCompra();
         $result = $listaCompra->execute("añadir pan");
         $this->assertEquals("pan x1", $result);
@@ -19,7 +19,7 @@ class ListaCompraTest extends TestCase
     /**
      * @test
      */
-    public function givenStringAñadirPan2ReturnsListWithPanx2() : void{
+    public function givenStringAñadirPan2ReturnsStringWithPanx2() : void{
         $listaCompra = new listaCompra();
         $result = $listaCompra->execute("añadir pan 2");
         $this->assertEquals("pan x2", $result);
